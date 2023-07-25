@@ -3,6 +3,7 @@ import Card from '../components/Card'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import LoadingView from '../components/LoadingView'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
     // declare variable
@@ -23,11 +24,6 @@ export default function Home() {
     }, [])
   return (
     <>
-
-     {/* 
-     
-        condition ? express_1 : expression_2
-     */}
         <main className='container'>
             <h1>Products</h1>
             <div className='row g-4'>
@@ -43,10 +39,15 @@ export default function Home() {
                         <div 
                             key={p.id}
                             className='col-12 col-sm-6 col-md-4 col-lg-3'>
-                            <Card 
-                                imageURL={p.images[0]}
-                                title={p.title}
-                            />
+                            <Link 
+                                to={`/read/${p.id}`}
+                                className='text-decoration-none'
+                            >
+                                <Card 
+                                    imageURL={p.images[0]}
+                                    title={p.title}
+                                />
+                            </Link>
                         </div>
                     ))
                 }
