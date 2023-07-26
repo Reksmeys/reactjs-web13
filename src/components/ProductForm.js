@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { fetchCategories, insertProduct } from '../services/productAction'
 
 export default function ProductForm() {
 
+    const [categories, setCategories] = useState([])
     const [product, setProduct] = useState({
         title: "",
         price: 0,
@@ -22,6 +24,24 @@ export default function ProductForm() {
         })
         console.log(product)
     }
+
+    const handleOnSubmit = () => {
+        console.log('on submit')
+        insertProduct(product)
+        .then(res => {
+            res.json()
+            if(res.status == 201){
+                alert("Created")
+            }
+        })
+        .then(resp => console.log(resp))
+
+    }
+
+    useEffect(() => {
+        fetchCategories()
+        .then(res => setCategories(res))
+    }, [])
 
   return (
     <main className='container'>
@@ -53,10 +73,13 @@ export default function ProductForm() {
                 onChange={onChangeHandler}
                 name='categoryId'
             >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option selected>Choose Category</option>
+                {
+                    categories && categories.map(cat => (
+                        <option value={cat.id}>{cat.name}</option>
+                    ))
+                }
+                
             </select>
         </div>
         <div className="mb-3">
@@ -68,7 +91,11 @@ export default function ProductForm() {
             onChange={onChangeHandler}
         ></textarea>
         </div>
-        <button type="button" class="btn btn-outline-primary">Create</button>
+        <button 
+            type="button" 
+            className="btn btn-outline-primary"
+            onClick={() => handleOnSubmit()}
+        >Create Product</button>
     </main>
   )
 }

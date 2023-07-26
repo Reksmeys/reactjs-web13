@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
 import LoadingView from '../components/LoadingView'
 import { Link } from 'react-router-dom'
+import { fetchProducts } from '../services/productAction'
 
 export default function Home() {
     // declare variable
     const [products, setProducts] = useState([])
     const [isLoading, setLoading] = useState(true)
-    const fetchProducts = () => {
-        fetch('https://api.escuelajs.co/api/v1/products?limit=8&offset=0')
-        .then(res => res.json())
-        .then(resp => {
-            setProducts(resp)
-            setLoading(false)
-        })
-    }
+    
     useEffect(() => {
         // call to api
         console.log("Home page started")
         fetchProducts()
+        .then(resp => {
+            setLoading(false)
+            setProducts(resp)
+        })
+
     }, [])
   return (
     <>
