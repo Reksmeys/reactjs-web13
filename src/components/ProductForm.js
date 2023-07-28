@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fetchCategories, insertProduct } from '../services/productAction'
+import { fetchCategories, fileUploadToServer, insertProduct } from '../services/productAction'
 
 export default function ProductForm() {
 
@@ -25,21 +25,39 @@ export default function ProductForm() {
         })
         console.log(product)
     }
-    const onFileUpload = (e) => {
+
+
+    const onPreviewImage = (e) => {
         console.log(e.target.files)
         setSource(e.target.files[0])
     }
 
     const handleOnSubmit = () => {
         console.log('on submit')
-        insertProduct(product)
+
+        // create image object as form data
+        const formData = new FormData()
+        formData.append("file", source)
+        // ----- function to upload image data to server ---
+        fileUploadToServer(formData)
         .then(res => {
-            res.json()
-            if(res.status == 201){
-                alert("Created")
-            }
+            product.images = [res.data.location]
+            console.log(product.images)
+            // --- insert product including image
+            insertProduct(product)
+            .then(res => res.json())
+            .then(resp => console.log(resp))
         })
-        .then(resp => console.log(resp))
+        // ----- end function
+
+        // insertProduct(product)
+        // .then(res => {
+        //     res.json()
+        //     if(res.status == 201){
+        //         alert("Created")
+        //     }
+        // })
+        // .then(resp => console.log(resp))
 
     }
 
@@ -106,7 +124,7 @@ export default function ProductForm() {
         </div>
         {/* choose file area */}
         <div className="mb-3">
-            <input type='file' onChange={onFileUpload} />
+            <input type='file' onChange={onPreviewImage} />
         </div>
         <button 
             type="button" 

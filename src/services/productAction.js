@@ -27,7 +27,7 @@ export const insertProduct = async (product) => {
 }
 
 /// MARK: Function to insert file such as image or PDF, etc.
-export const fileUpload = async (image) => {
+export const fileUploadToServer = async (image) => {
     let resp = await axios({
         method: "POST",
         headers: {
