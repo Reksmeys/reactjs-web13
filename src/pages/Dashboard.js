@@ -37,7 +37,6 @@ export default function Dashboard() {
             columns={columns}
             data={products}
             pagination
-            
         />
     </main>
   )
