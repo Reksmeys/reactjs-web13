@@ -37,11 +37,7 @@ export default function ProductForm({edit}) {
     }
 
     const handleOnSubmit = () => {
-        console.log('on submit')
-        
-
         /// ------ Check condition whether create or update product -----
-
         if(edit){
             // soure is equal to "", it mean that user update with old image
             if(source == ""){
@@ -51,7 +47,7 @@ export default function ProductForm({edit}) {
                 .then(res => res.json())
                 .then(res => console.log(res))
             }else{
-                // User choose new image
+                // User choose new image || user want to change new image of product
                 const image = new FormData()
                 image.append("file", source)
                 fileUploadToServer(image)
@@ -64,6 +60,7 @@ export default function ProductForm({edit}) {
             }
             
         }else{
+            // Insert New Product
             // this will excecute when user insert new product 
             // no need to check image old or new because user must be upload new image
             // ---create image object as form data

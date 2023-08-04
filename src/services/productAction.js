@@ -13,6 +13,10 @@ export const fetchProducts = async () => {
     let resp = await fetch(`${base_URL}products`)
     return resp.json()
 }
+export const searchProduct = async (title) => {
+    let resp = await fetch(`${base_URL}products?title=${title}`)
+    return resp.json()
+}
 
 /// MARK: CREATE FUNCTION TO INSERT PRODUCT
 export const insertProduct = async (product) => {
