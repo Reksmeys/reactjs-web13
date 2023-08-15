@@ -1,6 +1,4 @@
 function Card({imageURL, title}){
-    // destructuring object
-   // const {imageURL, desc} = props
     return(
         <>
             <div className="card h-100 shadow-sm border-0">

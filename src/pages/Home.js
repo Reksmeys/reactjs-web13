@@ -4,21 +4,23 @@ import LoadingView from '../components/LoadingView'
 import { Link } from 'react-router-dom'
 import { fetchProducts } from '../services/productAction'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllProducts } from '../redux/actions/productActions'
+import { fetchAllCategories, fetchAllProducts } from '../redux/actions/productActions'
 
 export default function Home() {
 
     const dispatch = useDispatch()
     const {products} = useSelector(state => state.prodReducer)
+    const {isLoading} = useSelector(state => state.prodReducer)
+    const {categories} = useSelector(state => state.prodReducer)
 
     // declare local state
     // const [products, setProducts] = useState([])
-    const [isLoading, setLoading] = useState(true)
+    // const [isLoading, setLoading] = useState(true)
     
     useEffect(() => {
         // subscribe to store
         dispatch(fetchAllProducts())
-
+        dispatch(fetchAllCategories())
 
         // call to api
         
@@ -33,10 +35,8 @@ export default function Home() {
     <>
         <main className='container'>
             <h1>Products</h1>
-            {
-                console.log(products && products)
-            }
-            {/* <div className='row g-4'>
+            
+            <div className='row g-4'>
                 {
                     isLoading ? 
                     <>
@@ -61,7 +61,7 @@ export default function Home() {
                         </div>
                     ))
                 }
-            </div> */}
+            </div>
         </main>
     </>
   )
