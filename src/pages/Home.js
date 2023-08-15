@@ -21,15 +21,6 @@ export default function Home() {
         // subscribe to store
         dispatch(fetchAllProducts())
         dispatch(fetchAllCategories())
-
-        // call to api
-        
-        // fetchProducts()
-        // .then(resp => {
-        //     setLoading(false)
-        //     setProducts(resp)
-        // })
-
     }, [])
   return (
     <>

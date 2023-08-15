@@ -1,9 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 // shortcut: rfc
 export default function Navbar() {
   const navigate = useNavigate()
+  const {isLogin} = useSelector(state => state.authReducer)
   return (
     <header className="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <div className="col-md-3 mb-2 mb-md-0">
@@ -28,8 +30,12 @@ export default function Navbar() {
         <button 
           type="button" 
           className="btn btn-primary"
-          onClick={() => navigate("/signup")}
-        >Sign Up</button>
+          onClick={() => navigate("/login")}
+        >
+          {
+            isLogin ? "Logout" : "Login In"
+          }
+        </button>
       </div>
     </header>
   )
