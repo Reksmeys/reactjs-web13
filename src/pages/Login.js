@@ -33,7 +33,7 @@ function Login(props){
     useEffect(() => {
       console.log(isLogin)
       console.log('in storage', secureLocalStorage.getItem('auth'))
-      console.log('auth',auth.data.access_token)
+      console.log('auth', auth.data.access_token)
     }, [])
 
     const handleSubmit = (e) => {
@@ -44,7 +44,6 @@ function Login(props){
         .then(resp => {
           navigate("/")
         })
-  
     }
     return(
         <main className="vh-100 d-flex justify-content-center align-items-center">

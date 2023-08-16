@@ -30,11 +30,9 @@ export default function Home() {
             <div className='row g-4'>
                 {
                     isLoading ? 
-                    <>
-                        <div className='col-12 col-md-3'>
-                            <LoadingView />
-                        </div>
-                    </>
+                    
+                        <LoadingView />
+                    
                     : 
                     products.map((p) => (
                         <div 

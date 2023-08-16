@@ -21,12 +21,24 @@ export default function Navbar() {
         <NavLink to="/faq" className={({isActive}) => isActive ? "nav-link px-2 link-danger fw-bolder" : "nav-link px-2"}>FAQs</NavLink>
         <NavLink to="/about-us" className={({isActive}) => isActive ? "nav-link px-2 link-danger fw-bolder" : "nav-link px-2"}>About</NavLink>
       </ul>
+      <NavLink 
+          className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+          } 
+          to={"/profile"}>
+          <img 
+            src={isLogin ? "https://eduport.webestica.com/assets/images/avatar/01.jpg" : "https://eduport.webestica.com/assets/images/avatar/01.jpg"}
+            alt="" 
+            width={40} 
+            className="rounded-circle mx-3 my-2" />
+      </NavLink>
 
       <div className="col-md-3 text-end">
-        <button 
+        {/* <button 
           type="button" 
           onClick={() => navigate("/create")}
-          className="btn btn-outline-primary me-2">Insert</button>
+          className="btn btn-outline-primary me-2">Insert</button> */}
+          
         <button 
           type="button" 
           className="btn btn-primary"
