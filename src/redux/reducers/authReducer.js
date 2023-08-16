@@ -8,7 +8,9 @@ export const authReducer = (state = initialState, action) => {
     const {type, payload} = action
     switch(type){
         case actionTypes.LOGIN_SUCESS: 
-        return{...state, isLogin: true, auth: payload}
+            return{...state, isLogin: true, auth: payload}
+        case actionTypes.LOGOUT:
+            return{...state, isLogin: false, auth: payload}
         default:
             return state
     }

@@ -1,10 +1,12 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { logout } from '../redux/actions/authActions'
 
 // shortcut: rfc
 export default function Navbar() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const {isLogin} = useSelector(state => state.authReducer)
   return (
     <header className="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -42,10 +44,10 @@ export default function Navbar() {
         <button 
           type="button" 
           className="btn btn-primary"
-          onClick={() => navigate("/login")}
+          onClick={() => isLogin ? dispatch(logout()) : navigate("/login")}
         >
           {
-            isLogin ? "Logout" : "Login In"
+            isLogin ? "Logout" : "Log In"
           }
         </button>
       </div>

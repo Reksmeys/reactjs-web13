@@ -33,7 +33,7 @@ function Login(props){
     useEffect(() => {
       console.log(isLogin)
       console.log('in storage', secureLocalStorage.getItem('auth'))
-      console.log('auth', auth.data.access_token)
+    //   console.log('auth', auth.data.access_token)
     }, [])
 
     const handleSubmit = (e) => {
