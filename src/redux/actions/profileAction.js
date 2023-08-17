@@ -22,7 +22,7 @@ export const fetchProfile = (auth) => {
         })
         .catch(er => {
             console.log("err", er)
-            alert(er.message)
+            // alert(er.message)
         })
     }
 }
