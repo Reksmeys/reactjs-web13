@@ -14,7 +14,7 @@ export const loginUser = (user) => {
         })
         .then(resp => {
             if(resp.status == 201){
-                secureLocalStorage.setItem('auth', resp)
+                secureLocalStorage.setItem('auth', resp.data)
                 dispatch({
                     type: actionTypes.LOGIN_SUCESS,
                     payload: resp

@@ -1,9 +1,9 @@
 import { base_URL } from "../../utils/constant"
 import { actionTypes } from "./actionTypes"
 
-export const fetchAllProducts = () => {
+export const fetchAllProducts = (offset, limit) => {
     return (dispatch) => {
-        fetch(`${base_URL}products`)
+        fetch(`${base_URL}products?offset=${offset}&limit=${limit}`)
         .then(res => res.json())
         .then(resp => dispatch({
             type: actionTypes.FETCH_PRDOUCTS,

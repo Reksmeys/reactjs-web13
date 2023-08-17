@@ -19,12 +19,12 @@ export default function Home() {
     
     useEffect(() => {
         // subscribe to store
-        dispatch(fetchAllProducts())
+        dispatch(fetchAllProducts(1, 12))
         dispatch(fetchAllCategories())
     }, [])
   return (
-    <>
-        <main className='container'>
+    <main>
+        <section className='container'>
             <h1>Products</h1>
             
             <div className='row g-4'>
@@ -37,7 +37,7 @@ export default function Home() {
                     products.map((p) => (
                         <div 
                             key={p.id}
-                            className='col-12 col-sm-6 col-md-4 col-lg-3'>
+                            className='col-12 col-sm-6 col-md-3 col-lg-2'>
                             <Link 
                                 to={`/read/${p.id}`}
                                 className='text-decoration-none'
@@ -51,7 +51,32 @@ export default function Home() {
                     ))
                 }
             </div>
-        </main>
-    </>
+        </section>
+        <section className='container mt-5'>
+            <h1>Categories</h1>
+            
+            <div className='row g-4'>
+                {
+                    isLoading ? 
+                    
+                        <LoadingView />
+                    
+                    : 
+                    categories.map((c) => (
+                        <div 
+                            key={c.id}
+                            className='col-12 col-sm-6 col-md-3 col-lg-2'>
+                           
+                            <Card 
+                                imageURL={c.image}
+                                title={c.name}
+                            />
+                           
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+    </main>
   )
 }

@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../redux/actions/authActions'
+import { fetchProfile } from '../redux/actions/profileAction'
 
 // shortcut: rfc
 export default function Navbar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const {profile} = useSelector(state => state.profReducer)
   const {isLogin} = useSelector(state => state.authReducer)
+  const {auth} = useSelector(state => state.authReducer)
+  
+  useEffect(() => {
+    dispatch(fetchProfile(isLogin ? auth.access_token : ""))
+  }, [])
+
   return (
     <header className="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <div className="col-md-3 mb-2 mb-md-0">
@@ -25,14 +33,14 @@ export default function Navbar() {
       </ul>
       <NavLink 
           className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link"
+            isActive ? "nav-link active" : "nav-link"
           } 
           to={"/profile"}>
-          <img 
-            src={isLogin ? "https://eduport.webestica.com/assets/images/avatar/01.jpg" : "https://eduport.webestica.com/assets/images/avatar/01.jpg"}
-            alt="" 
-            width={40} 
-            className="rounded-circle mx-3 my-2" />
+        <img 
+          src={isLogin ? profile.avatar : "https://eduport.webestica.com/assets/images/avatar/01.jpg"}
+          alt="" 
+          width={40} 
+          className="rounded-circle mx-3 my-2" />
       </NavLink>
 
       <div className="col-md-3 text-end">

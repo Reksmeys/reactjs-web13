@@ -3,7 +3,7 @@ function Card({imageURL, title}){
         <>
             <div className="card h-100 shadow-sm border-0">
                 <img 
-                    src={imageURL} 
+                    src={imageURL ?? "https://picsum.photos/640/640?r=5369"} 
                     className="card-img-top" alt="card image" 
                 />
                 <div className="card-body">

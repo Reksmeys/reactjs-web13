@@ -9,6 +9,8 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/404';
+import Profile from './pages/Profile';
+import Pricing from './pages/Pricing';
 function App() { 
   return (
     <>
@@ -20,6 +22,8 @@ function App() {
           <Route path='/create' element={<ProductForm edit={false} />} />
           <Route path='/edit' element={<ProductForm edit={true} />} />
           <Route path='/datatable' element={<Dashboard />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/pricing' element={<Pricing />} />
           <Route path='/*' element={<NotFound />}/>
         </Route>
         <Route path='/login' element={<Login />} />
