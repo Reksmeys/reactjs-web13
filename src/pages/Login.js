@@ -18,6 +18,8 @@ function Login(props){
         password: "changeme"
     })
 
+    const [error, setError] = useState("")
+
     const onInputChangeHanler = (e) => {
         const {name, value} = e.target
         console.log(user)
@@ -42,7 +44,11 @@ function Login(props){
         console.log(user)
         dispatch(loginUser(user))
         .then(resp => {
-          navigate("/")
+            console.log('is login in handle submit', isLogin)
+        //   navigate("/")
+            if (!isLogin){
+                setError("Incorrect Username or Password")
+            }
         })
     }
     return(
@@ -60,6 +66,7 @@ function Login(props){
                             className="form-control" 
                             placeholder="name@example.com" />
                     <label for="floatingInput">Email address</label>
+                    <span>{error}</span>
                     </div>
                     <div className="form-floating mb-2">
                         <input 
