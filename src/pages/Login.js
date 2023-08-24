@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import secureLocalStorage from "react-secure-storage"
 import { loginUser } from "../redux/actions/authActions"
+import { useFormik } from "formik"
+import { basicSchema } from "../schemas"
 // import { loginUser } from "../redux/actions/authActions"
 
 function Login(props){
@@ -13,47 +15,44 @@ function Login(props){
     const {isLogin} = useSelector(state => state.authReducer)
     const {auth} = useSelector(state => state.authReducer)
 
-    const [user, setUser] = useState({
-        email: "john@mail.com",
-        password: "changeme"
+    const onSubmit = async (values, actions) => {
+        console.log(values)
+        console.log(actions)
+        dispatch(loginUser(values))
+        .then(res => {
+            navigate("/")
+        })
+
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        actions.resetForm()
+        // e.preventDefault()
+        // console.log("onsubmit")
+        // console.log(user)
+        // dispatch(loginUser(user))
+        // .then(resp => {
+        //     navigate("/")
+        // })
+    }
+
+    const {values, errors, handleBlur, handleChange, handleSubmit, isSubmitting, resetForm} = useFormik({
+        initialValues: {
+            email: "",
+            password: ""
+        },
+        validationSchema: basicSchema,
+        onSubmit
     })
 
-    const [error, setError] = useState("")
+    console.log(errors)
 
-    const onInputChangeHanler = (e) => {
-        const {name, value} = e.target
-        console.log(user)
-        setUser(prevState => 
-            {
-                return{
-                    ...prevState,
-                    [name]:value 
-                }
-            }
-        )
-    }
+    
     useEffect(() => {
       console.log(isLogin)
       console.log('in storage', secureLocalStorage.getItem('auth'))
     //   console.log('auth', auth.data.access_token)
     }, [])
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log("onsubmit")
-        console.log(user)
-        dispatch(loginUser(user))
-        .then(resp => {
-            console.log('is login in handle submit', isLogin)
-        //   navigate("/")
-            if (!isLogin){
-                setError("Incorrect Username or Password")
-            }else{
-                setError("")
-                navigate("/")
-            }
-        })
-    }
+    
     return(
         <main className="vh-100 d-flex justify-content-center align-items-center">
                 <form onSubmit={handleSubmit} className="w-25">
@@ -64,22 +63,27 @@ function Login(props){
                         <input 
                             type="email" 
                             name="email"
-                            value={user.email}
-                            onChange={onInputChangeHanler}
-                            className="form-control" 
+                            id="email"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            className={errors.email ? "form-control border-danger": "form-control"}
                             placeholder="name@example.com" />
                     <label for="floatingInput">Email address</label>
-                    <span>{error}</span>
+                    {errors.email && <p className="text-danger">{errors.email}</p>}
                     </div>
                     <div className="form-floating mb-2">
                         <input 
                             type="password"
                             name="password" 
-                            value={user.password}
-                            onChange={onInputChangeHanler}
-                            className="form-control"  
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="password"
+                            className={errors.password ? "form-control border-danger": "form-control"}
                             placeholder="Password" />
                     <label for="floatingPassword">Password</label>
+                    {errors.password && <p className="text-danger">{errors.password}</p>}
                     </div>
 
                     <div className="checkbox mb-3">
@@ -87,7 +91,9 @@ function Login(props){
                         <input type="checkbox" value="remember-me" /> Remember me
                     </label>
                     </div>
-                    <button className="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
+                    <button
+                        disabled={isSubmitting}
+                         className="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
                     <p className="mt-5 mb-3 text-body-secondary text-center">© 2015 - 2023</p>
                 </form>
         </main>
